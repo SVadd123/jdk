@@ -1103,8 +1103,8 @@ class ImmutableCollections {
         private final V v0;
 
         Map1(K k0, V v0) {
-            this.k0 = Objects.requireNonNull(k0);
-            this.v0 = Objects.requireNonNull(v0);
+            this.k0 = Objects.requireNonNull(k0, () -> "Key in map entry was null");
+            this.v0 = Objects.requireNonNull(v0, () -> "Value in map entry was null");
         }
 
         @Override
@@ -1183,9 +1183,9 @@ class ImmutableCollections {
 
             for (int i = 0; i < input.length; i += 2) {
                 @SuppressWarnings("unchecked")
-                    K k = Objects.requireNonNull((K)input[i]);
+                    K k = Objects.requireNonNull((K)input[i], () -> "Key for map entry " + (i / 2) " was null");
                 @SuppressWarnings("unchecked")
-                    V v = Objects.requireNonNull((V)input[i+1]);
+                    V v = Objects.requireNonNull((V)input[i+1], () -> "Value for map entry " + (i / 2) " was null");
                 int idx = probe(k);
                 if (idx >= 0) {
                     throw new IllegalArgumentException("duplicate key: " + k);
